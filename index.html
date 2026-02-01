@@ -1,0 +1,414 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,100..900;1,14..32,100..900&family=Josefin+Sans:ital,wght@0,100..700;1,100..700&family=Mulish:ital,wght@0,200..1000;1,200..1000&display=swap" rel="stylesheet">
+    <title>Will You Be My Valentine? 💕</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Josefin sans', serif;
+            background: linear-gradient(135deg, #f8c8dc 0%, #f4b6c2 25%, #f9d1e1 50%, #fce4ed 75%, #fff8fb 100%);
+            height: 100vh;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        /* Subtle floating hearts background */
+        body::before {
+            content: '';
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: 
+                radial-gradient(ellipse 30% 30% at 15% 85%, rgba(255,182,193,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse 25% 25% at 75% 25%, rgba(255,105,180,0.12) 0%, transparent 50%),
+                radial-gradient(ellipse 20% 20% at 45% 60%, rgba(255,192,203,0.1) 0%, transparent 50%);
+            animation: gentleFloat 25s ease-in-out infinite;
+            pointer-events: none;
+        }
+
+        @keyframes gentleFloat {
+            0%, 100% { transform: translateY(0px) scale(1); opacity: 0.8; }
+            50% { transform: translateY(-15px) scale(1.05); opacity: 1; }
+        }
+
+        .dialog-box {
+            background: linear-gradient(145deg, rgba(255,248,251,0.95), rgba(255,240,245,0.98));
+            border-radius: 20px;
+            padding: 45px 35px;
+            max-width: 480px;
+            width: 90%;
+            text-align: center;
+            box-shadow: 
+                0 25px 50px rgba(255,105,180,0.25),
+                0 0 0 1px rgba(255,182,193,0.3) inset;
+            border: 2px solid rgba(255,105,180,0.3);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            animation: fadeSlideIn 1s ease-out;
+        }
+
+        @keyframes fadeSlideIn {
+            0% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) translateY(30px) scale(0.95); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) translateY(0) scale(1); 
+            }
+        }
+
+        .dialog-title {
+            font-size: 32px;
+            background: linear-gradient(45deg, #c71585, #db7093);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 25px;
+            font-weight: 600;
+            letter-spacing: 1px;
+        }
+
+        .dialog-text {
+            font-size: 22px;
+            color: #8b4789;
+            margin-bottom: 35px;
+            line-height: 1.6;
+            font-weight: 400;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 16px 35px;
+            border: none;
+            border-radius: 50px;
+            font-size: 18px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+            box-shadow: 0 10px 25px rgba(255,105,180,0.3);
+            font-family: inherit;
+            position: relative;
+            overflow: hidden;
+            min-width: 130px;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.4), transparent);
+            transition: left 0.5s;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-yes {
+            background: linear-gradient(135deg, #ff69b4 0%, #ff1493 100%);
+            color: white;
+        }
+
+        .btn-yes:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(255,20,147,0.4);
+        }
+
+        .btn-no {
+            background: linear-gradient(135deg, #ffe4e6, #ffd1dc);
+            color: #c71585;
+            border: 2px solid rgba(255,105,180,0.3);
+        }
+
+        .btn-no:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(255,182,193,0.4);
+        }
+
+        .btn-next {
+            background: linear-gradient(135deg, #ff69b4, #ff1493);
+            color: white;
+            padding: 18px 45px;
+            font-size: 20px;
+        }
+
+        .btn-next:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 15px 35px rgba(255,20,147,0.4);
+        }
+
+        /* Final screen - elegant entrance */
+        .final-screen {
+            animation: elegantReveal 1.2s ease-out;
+        }
+
+        @keyframes elegantReveal {
+            0% { 
+                opacity: 0; 
+                transform: translate(-50%, -50%) scale(0.8) rotateX(10deg); 
+            }
+            100% { 
+                opacity: 1; 
+                transform: translate(-50%, -50%) scale(1) rotateX(0deg); 
+            }
+        }
+
+        .custom-image {
+            width: 220px;
+            height: 220px;
+            border-radius: 18px;
+            margin: 0 auto 25px;
+            display: block;
+            box-shadow: 0 15px 40px rgba(255,105,180,0.35);
+            object-fit: cover;
+            border: 3px solid rgba(255,182,193,0.6);
+            transition: all 0.4s ease;
+        }
+
+        .custom-image:hover {
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(255,105,180,0.45);
+        }
+
+        .custom-text {
+            font-size: 20px;
+            color: #8b4789;
+            background: rgba(255,248,251,0.9);
+            padding: 25px;
+            border-radius: 16px;
+            margin-top: 20px;
+            font-weight: 500;
+            line-height: 1.7;
+            border-left: 5px solid #ff69b4;
+            font-style: italic;
+        }
+
+        /* Heart particles - subtle */
+        .hearts {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 999;
+        }
+
+        .heart {
+            position: absolute;
+            font-size: 18px;
+            opacity: 0.8;
+            animation: riseGently 4s ease-out forwards;
+        }
+
+        @keyframes riseGently {
+    0% {
+        opacity: 1;
+        transform: translateY(0) scale(1) rotate(0deg);
+    }
+    100% {
+        opacity: 0;
+        transform: translateY(-100vh) scale(0.8) rotate(180deg);
+    }
+}
+
+
+        @media (max-width: 480px) {
+            .dialog-box {
+                padding: 35px 25px;
+                margin: 20px;
+            }
+            
+            .dialog-title {
+                font-size: 28px;
+            }
+            
+            .dialog-text {
+                font-size: 19px;
+            }
+            
+            .btn {
+                padding: 14px 28px;
+                font-size: 16px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="hearts" id="hearts"></div>
+    
+    <!-- Dialog 1 -->
+    <div class="dialog-box" id="dialog1">
+        <div class="dialog-title">Baby </div>
+        <div class="dialog-text">There's something I need to ask you...</div>
+        <button class="btn btn-next" onclick="nextDialog()">Mmhm? →</button>
+    </div>
+
+    <!-- Dialog 2 -->
+    <div class="dialog-box" id="dialog2" style="display: none;">
+        <div class="dialog-title">Will you...</div>
+        <div class="dialog-text">be my Valentine this February 14th?</div>
+        <div class="buttons">
+            <button class="btn btn-yes" onclick="accept()">Yes, with all my heart 💕</button>
+            <button class="btn btn-no" id="noBtn" onclick="reject()">Maybe not</button>
+        </div>
+    </div>
+
+    <!-- Final Dialog 3 -->
+    <div class="dialog-box final-screen" id="dialog3" style="display: none;">
+        <div class="dialog-title">Yaayyy!</div>
+        <img class="custom-image" id="customImage" src="https://images.unsplash.com/photo-1517457373958-b7bdd4587206?w=400&h=400&fit=crop&crop=center" alt="Our cherished moment">
+        <div class="dialog-text">Us on Valentines (digitally) 😁</div>
+        <div class="custom-text" id="customText" contenteditable="true" placeholder="Your personal message...">
+            I might not be coming to you, but we'll still celebrate 💋 <br> I Love You 🤗
+        </div>
+    </div>
+
+    <script>
+        let noButtonClicks = 0;
+        const noButton = document.getElementById('noBtn');
+
+        function nextDialog() {
+            document.getElementById('dialog1').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('dialog1').style.display = 'none';
+                document.getElementById('dialog2').style.display = 'block';
+            }, 300);
+        }
+
+        function reject() {
+            noButtonClicks++;
+            const maxX = window.innerWidth - noButton.offsetWidth - 20;
+            const maxY = window.innerHeight - noButton.offsetHeight - 20;
+            
+            const randomX = Math.random() * maxX;
+            const randomY = Math.random() * maxY;
+            
+            noButton.style.position = 'fixed';
+            noButton.style.zIndex = '1001';
+            noButton.style.top = randomY + 'px';
+            noButton.style.left = randomX + 'px';
+            noButton.style.transition = 'all 0.2s cubic-bezier(0.68, -0.55, 0.265, 1.55)';
+            
+            // Elegant text changes
+            const noTexts = [
+                'Do you really have a choice?',
+                'Please Please Please 😭',
+                'Maine no karne hi ni dena ',
+            ];
+            
+            if (noButtonClicks <= noTexts.length) {
+                noButton.textContent = noTexts[noButtonClicks - 1];
+            }
+            
+            createHearts();
+        }
+
+        function accept() {
+            document.getElementById('dialog2').style.opacity = '0';
+            setTimeout(() => {
+                document.getElementById('dialog2').style.display = 'none';
+                document.getElementById('dialog3').style.display = 'block';
+                noButton.style.display = 'none';
+            }, 300);
+            
+            createHearts();
+            setTimeout(createHearts, 600);
+            setTimeout(createHearts, 1200);
+        }
+
+        function createHearts() {
+    const heartsContainer = document.getElementById('hearts');
+    
+    for (let i = 0; i < 12; i++) {
+        setTimeout(() => {
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+            heart.innerHTML = ['💕', '💖', '💗', '❣️'][Math.floor(Math.random() * 4)];
+            
+            // Start from random screen position (middle 50% area only)
+            heart.style.left = (30 + Math.random() * 40) + '%';
+            heart.style.top = '80%';  // Bottom of screen
+            
+            heart.style.fontSize = (16 + Math.random() * 12) + 'px';
+            heart.style.animationDuration = (2 + Math.random() * 3) + 's';
+            
+            heartsContainer.appendChild(heart);
+            
+            setTimeout(() => heart.remove(), 5000);
+        }, i * 100);
+    }
+}
+
+
+
+document.addEventListener('mousemove', (e) => {
+    if (noButtonClicks > 0 && noButton.style.display !== 'none') {
+        const rect = noButton.getBoundingClientRect();
+        const centerX = rect.left + rect.width / 2;
+        const centerY = rect.top + rect.height / 2;
+        
+        const dx = e.clientX - centerX;
+        const dy = e.clientY - centerY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
+        
+        if (distance < 80) {
+            const speed = 0.08; 
+            const moveX = dx * speed;
+            const moveY = dy * speed;
+            
+            let newLeft = parseFloat(noButton.style.left || 0) + moveX;
+            let newTop = parseFloat(noButton.style.top || 0) + moveY;
+
+            newLeft = Math.max(10, Math.min(window.innerWidth - rect.width - 10, newLeft));
+            newTop = Math.max(10, Math.min(window.innerHeight - rect.height - 10, newTop));
+            
+            noButton.style.left = newLeft + 'px';
+            noButton.style.top = newTop + 'px';
+        }
+    }
+});
+
+        // Image customization
+        document.getElementById('customImage').ondragover = (e) => e.preventDefault();
+        document.getElementById('customImage').ondrop = (e) => {
+            e.preventDefault();
+            const files = e.dataTransfer.files;
+            if (files[0] && files[0].type.startsWith('image/')) {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    document.getElementById('customImage').src = ev.target.result;
+                };
+                reader.readAsDataURL(files[0]);
+            }
+        };
+    </script>
+</body>
+</html>
